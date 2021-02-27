@@ -1,0 +1,73 @@
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+      <a class="navbar-brand" style="color: aliceblue;">Dating App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse" *ngIf="loggedin">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/member" routerLinkActive='active'>Matches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/list" routerLinkActive='active'>List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/messages" routerLinkActive='active'>Messages</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="btn-group" dropdown *ngIf="authenticationService.currentUser$ | async">
+        <button id="button-basic" dropdownToggle type="button" class="btn btn-default dropdown-toggle"
+                aria-controls="dropdown-basic">
+          Welcome User <span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+            role="menu" aria-labelledby="button-basic">
+          <li role="menuitem"><a class="dropdown-item" href="#">Edit Profile</a></li>
+          <li class="divider dropdown-divider"></li>
+          <li role="menuitem" (click)="logout()"><a class="dropdown-item" href="#">Logout</a></li>
+        </ul>
+      </div>
+
+      <form class="d-flex" #loginForm="ngForm" *ngIf="(authenticationService.currentUser$ | async)=== null" autocomplete="off" (ngSubmit)="login()">
+        <input
+         class="form-control me-2"
+         type="text" 
+         placeholder="Username"
+         name="username" 
+         [(ngModel)]="loginUser.email">&nbsp;&nbsp;
+
+        <input
+         class="form-control me-2" 
+         placeholder="Password"
+         name="password"
+         [(ngModel)]="loginUser.password"
+         [type]="fieldTextType ? 'text' : 'password'">&nbsp;&nbsp;
+        <!-- <input class="form-control me-2" placeholder="Password" name="password" [type]="fieldTextType ? 'text' : 'password'">&nbsp;&nbsp; -->
+        <!-- <input type="checkbox" (click)="showPassword()">Show Password -->
+        <button class="btn btn-outline-primary" type="submit">Login</button>
+      </form>
+    </div>
+  </nav>
+  <br><br><br>
+  
+  <!-- <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf= !isSuccessful> 
+    Welcome <strong>{{username}}</strong>!!! Login Successful
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf= !isNotSuccessful> 
+    Sorry!!! Login attempt failed
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  
+
+  
+
+  
