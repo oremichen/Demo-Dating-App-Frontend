@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../Services/Api';
 import { CreateUsersDto } from '../Services/Api/model/createUsersDto';
 import { UserDto } from '../Services/Api/model/userDto';
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   user: UserDto={}
   createUser: CreateUsersDto={}
 
-  constructor(private _usersService: UsersService) { }
+  constructor(private _usersService: UsersService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -28,8 +29,9 @@ export class RegisterComponent implements OnInit {
       this.user = res
       console.log(this.user)
       this.cancel()
-      alert("Restration was successful, you can now login");
+      this.toastr.success("Registration was successful, check your mail");
     }, error => console.log(error.error))
+    this.toastr.error("Error! Something went wrong, check input and try again");
   }
 
   cancel(){

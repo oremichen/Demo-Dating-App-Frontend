@@ -41,7 +41,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
-      positionClass: "toast-buttom-right"
+      positionClass: "toast-bottom-right"
     })
   ],
   providers: [UsersService, RolesService, AuthenticationService],

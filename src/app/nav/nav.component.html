@@ -5,17 +5,19 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse" *ngIf="loggedin">
+      <div class="collapse navbar-collapse" id="navbarCollapse" >
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/member" routerLinkActive='active'>Matches</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/list" routerLinkActive='active'>List</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/messages" routerLinkActive='active'>Messages</a>
-          </li>
+          <ng-container *ngIf="loggedin">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/member" routerLinkActive='active'>Matches</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/list" routerLinkActive='active'>List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/messages" routerLinkActive='active'>Messages</a>
+            </li>
+          </ng-container>
         </ul>
       </div>
 
@@ -48,7 +50,7 @@
          [type]="fieldTextType ? 'text' : 'password'">&nbsp;&nbsp;
         <!-- <input class="form-control me-2" placeholder="Password" name="password" [type]="fieldTextType ? 'text' : 'password'">&nbsp;&nbsp; -->
         <!-- <input type="checkbox" (click)="showPassword()">Show Password -->
-        <button class="btn btn-outline-primary" type="submit">Login</button>
+        <button class="btn btn-success" type="submit">Login</button>
       </form>
     </div>
   </nav>

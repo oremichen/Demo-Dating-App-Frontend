@@ -36,17 +36,17 @@ export class NavComponent implements OnInit {
     //     this.loggedin=!!user
     //   })
     // }
-
+    
     login(){
       this.authenticationService.loginPost(this.loginUser).subscribe(res=>{
       
         this.loggedin = true
-        //this.isSuccessful= false
+        this.toastr.success("Success!!")
        
         this.gotoMemberPage()
       }, error =>{
           console.log(error.error)
-          this.toastr.error(error.error)
+          this.toastr.error(error.error.title)
           //this.isNotSuccessful= false
           //alert(error.error);
       })
