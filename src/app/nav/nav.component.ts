@@ -46,7 +46,7 @@ export class NavComponent implements OnInit {
         this.gotoMemberPage()
       }, error =>{
           console.log(error.error)
-          this.toastr.error(error.error.title)
+          this.toastr.error("Something went wrong, please check connection or input data and try again")
           //this.isNotSuccessful= false
           //alert(error.error);
       })
