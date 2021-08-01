@@ -30,8 +30,10 @@ export class RegisterComponent implements OnInit {
       console.log(this.user)
       this.cancel()
       this.toastr.success("Registration was successful, check your mail");
-    }, error => console.log(error.error))
-    this.toastr.error("Error! Something went wrong, check input and try again");
+    }, (error) =>{
+      console.log(error.error)
+      this.toastr.error("Error! Something went wrong, check input and try again");
+      })
   }
 
   cancel(){
