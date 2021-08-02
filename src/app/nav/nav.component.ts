@@ -39,7 +39,7 @@ export class NavComponent implements OnInit {
     
     login(){
       this.authenticationService.loginPost(this.loginUser).subscribe(res=>{
-      
+   
         this.loggedin = true
         this.toastr.success("Success!!")
        

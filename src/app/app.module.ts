@@ -20,6 +20,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { MembersService } from './Services/Api/api/members.service';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
       positionClass: "toast-bottom-right"
     })
   ],
-  providers: [UsersService, RolesService, AuthenticationService],
+  providers: [UsersService, RolesService, AuthenticationService, MembersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
