@@ -35,12 +35,12 @@
     }
      
      constructor(protected httpClient: HttpClient) {
-       httptoken= JSON.parse(localStorage.getItem('user')).userDto.token
+       //httptoken= JSON.parse(localStorage.getItem('user')).userDto.token
      }
  
      
      getAllMembers(){
-         debugger
+         
          const header = this.httpOptions
          console.log(header)
         return this.httpClient.get(`${this.basePath}/api/Users/GetAllUsers`)

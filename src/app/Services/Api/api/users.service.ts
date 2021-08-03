@@ -36,9 +36,12 @@ const httpOptions = {
 export class UsersService {
 
     protected basePath = ServiceUrlConnections.serviceUrl;
-    public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
-
+    public defaultHeaders =  new HttpHeaders({
+            Authorization: 'Bearer '+ JSON.parse(localStorage.getItem('user')).userDto.token
+        })
+       
+    
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
@@ -154,6 +157,7 @@ export class UsersService {
         const consumes: string[] = [
         ];
 
+        console.log(headers)
         return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetUserById`,
             {
                 params: queryParameters,

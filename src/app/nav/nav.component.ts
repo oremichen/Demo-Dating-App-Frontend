@@ -28,14 +28,14 @@ export class NavComponent implements OnInit {
               private toastr: ToastrService) { }
 
     ngOnInit(): void {
-      //this.getCurrentUser()
+      this.getCurrentUser()
     }
 
-    // getCurrentUser(){
-    //   this.authenticationService.currentUser$.subscribe(user=>{
-    //     this.loggedin=!!user
-    //   })
-    // }
+    getCurrentUser(){
+      this.authenticationService.currentUser$.subscribe(user=>{
+        this.loggedin=!!user
+      })
+    }
     
     login(){
       this.authenticationService.loginPost(this.loginUser).subscribe(res=>{
