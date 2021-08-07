@@ -24,13 +24,7 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 import { ServiceUrlConnections } from 'src/app/ServiceUrlConnections';
 
-const httpOptions = {
-    headers: new HttpHeaders({
-        Authorization: 'Bearer '+ JSON.parse(localStorage.getItem('user'))
-        
-    })
-   
-}
+
 
 @Injectable()
 export class UsersService {

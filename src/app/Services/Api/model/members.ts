@@ -14,6 +14,7 @@ export interface Members {
     interests: string;
     city: string;
     age: number;
+    photoUrl: string;
     photo: PhotoDto[];
 }
 

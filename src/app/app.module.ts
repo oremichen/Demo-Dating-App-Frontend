@@ -21,6 +21,7 @@ import { ListsComponent } from './lists/lists.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { MembersService } from './Services/Api/api/members.service';
+import { MemberCardComponent } from './member/member-card/member-card.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { MembersService } from './Services/Api/api/members.service';
     MemberDetailsComponent,
     MessagesComponent,
     ListsComponent,
-    TestErrorsComponent
+    TestErrorsComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
