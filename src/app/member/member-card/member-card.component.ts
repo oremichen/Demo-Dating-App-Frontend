@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UsersService } from 'src/app/Services/Api';
 import { Members } from 'src/app/Services/Api/model/members';
 
 @Component({
@@ -9,9 +11,16 @@ import { Members } from 'src/app/Services/Api/model/members';
 export class MemberCardComponent implements OnInit {
   @Input() member: Members
 
-  constructor() { }
+  constructor(private _userservice:UsersService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
+
+  // loadMember(id: number){
+  //   this._userservice.apiUsersGetUserByIdGet(id).subscribe(res=>{
+  //     console.log("member", res)
+  //     this._route.snapshot.paramMap.get('id')
+  //   })
+  // }
 
 }

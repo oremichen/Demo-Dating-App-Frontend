@@ -25,9 +25,5 @@ export class MemberListComponent implements OnInit {
     })
   }
 
-  loadMember(id: number){
-    this._userservice.apiUsersGetUserByIdGet(id).subscribe(res=>{
-      console.log("member", res)
-    })
-  }
+  
 }

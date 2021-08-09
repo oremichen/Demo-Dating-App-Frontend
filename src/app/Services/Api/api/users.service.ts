@@ -31,9 +31,10 @@ export class UsersService {
 
     protected basePath = ServiceUrlConnections.serviceUrl;
     public configuration = new Configuration();
-    public defaultHeaders =  new HttpHeaders({
-            Authorization: 'Bearer '+ JSON.parse(localStorage.getItem('user')).userDto.token
-        })
+    public defaultHeaders = new HttpHeaders();
+    // public defaultHeaders =  new HttpHeaders({
+    //         Authorization: 'Bearer '+ JSON.parse(localStorage.getItem('user')).userDto.token
+    //     })
        
     
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {

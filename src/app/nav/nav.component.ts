@@ -33,22 +33,28 @@ export class NavComponent implements OnInit {
 
     getCurrentUser(){
       this.authenticationService.currentUser$.subscribe(user=>{
-        this.loggedin=!!user
+       // debugger
+       // this.loggedin=!!user
+       if(user!= null){
+        this.login
+        return
+       }else{
+        this.toastr.error("Authentication failed")
+        return
+       }
       })
     }
     
     login(){
       this.authenticationService.loginPost(this.loginUser).subscribe(res=>{
-   
-        this.loggedin = true
-        this.toastr.success("Success!!")
-       
-        this.gotoMemberPage()
+          this.loggedin = true
+          this.toastr.success("Success!!")
+          this.gotoMemberPage()
+        
       }, error =>{
           console.log(error.error)
           this.toastr.error("Something went wrong, please check connection or input data and try again")
-          //this.isNotSuccessful= false
-          //alert(error.error);
+          
       })
     }
 

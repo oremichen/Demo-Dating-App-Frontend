@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { UsersService } from './Services/Api/api/users.service';
 import { RolesService } from './Services/Api/api/roles.service';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { MembersService } from './Services/Api/api/members.service';
 import { MemberCardComponent } from './member/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
       positionClass: "toast-bottom-right"
     })
   ],
-  providers: [UsersService, RolesService, AuthenticationService, MembersService],
+  providers: [UsersService, RolesService, AuthenticationService, MembersService,
+  {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
