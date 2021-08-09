@@ -35,11 +35,9 @@ export class NavComponent implements OnInit {
       this.authenticationService.currentUser$.subscribe(user=>{
        // debugger
        // this.loggedin=!!user
+       console.log("loggin", this.loggedin)
        if(user!= null){
         this.login
-        return
-       }else{
-        this.toastr.error("Authentication failed")
         return
        }
       })

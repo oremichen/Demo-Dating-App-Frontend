@@ -19,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
     let currentUser: UserDto
     
     this.authservice.currentUser$.pipe(take(1)).subscribe(res=>{
-      debugger
+      
       let user = JSON.parse(localStorage.getItem('user'))
       if(user){
         currentUser = user
