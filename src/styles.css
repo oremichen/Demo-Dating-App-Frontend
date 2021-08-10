@@ -27,5 +27,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    margin-top: 0px;
 }  
 
+.member-tabset > .nav-tabs > li.active {
+    border-bottom: 4px solid #e95420;
+    position: relative;
+}
+
+.member-tabset > .nav-tabs > li.active > a {
+    border: 0 !important;
+    color: #333333;
+}
+
+.member-tabset > .nav-tabs > li.active > a > i {
+    color: #404040;
+}
+
+.member-tabset > .tab-content {
+    margin-top: -3px;
+    background-color: #ffff;
+    border: 0;
+    border-top: 1px solid #eee;
+    padding: 15px 0;
+}
+
 
 
