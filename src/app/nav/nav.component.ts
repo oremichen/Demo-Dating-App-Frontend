@@ -28,27 +28,31 @@ export class NavComponent implements OnInit {
               private toastr: ToastrService) { }
 
     ngOnInit(): void {
-      //this.getCurrentUser()
+      this.getCurrentUser()
     }
 
-    // getCurrentUser(){
-    //   this.authenticationService.currentUser$.subscribe(user=>{
-    //     this.loggedin=!!user
-    //   })
-    // }
+    getCurrentUser(){
+      this.authenticationService.currentUser$.subscribe(user=>{
+       // debugger
+       // this.loggedin=!!user
+       console.log("loggin", this.loggedin)
+       if(user!= null){
+        this.login
+        return
+       }
+      })
+    }
     
     login(){
       this.authenticationService.loginPost(this.loginUser).subscribe(res=>{
-      
-        this.loggedin = true
-        this.toastr.success("Success!!")
-       
-        this.gotoMemberPage()
+          this.loggedin = true
+          this.toastr.success("Success!!")
+          this.gotoMemberPage()
+        
       }, error =>{
           console.log(error.error)
           this.toastr.error("Something went wrong, please check connection or input data and try again")
-          //this.isNotSuccessful= false
-          //alert(error.error);
+          
       })
     }
 

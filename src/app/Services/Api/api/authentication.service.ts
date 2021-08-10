@@ -20,6 +20,7 @@ constructor(private httpClient: HttpClient){}
         return this.httpClient.post(`${this.basePath}/api/Users/Login`, model).pipe(
             map((response: UserDto)=>{
                 const user = response
+                console.log(user)
                 if(user){
                     localStorage.setItem('user', JSON.stringify(user))
                     this.currentUserSource.next(user)
