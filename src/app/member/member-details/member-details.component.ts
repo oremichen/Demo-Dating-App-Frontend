@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { UsersService } from 'src/app/Services/Api';
 import { Members } from 'src/app/Services/Api/model/members';
 
@@ -10,11 +11,29 @@ import { Members } from 'src/app/Services/Api/model/members';
 })
 export class MemberDetailsComponent implements OnInit {
   member: Members
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
 
   constructor(private _userservice:UsersService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadMember()
+
+    this.galleryOptions=[
+      {
+        width:'500px',
+        height: '500px',
+        previewDescription: true,
+        preview: false,
+        thumbnailsColumns: 4,            //this will come from the number of images in the databse
+        imageAnimation: NgxGalleryAnimation.Slide
+        
+      }
+    ]
+  }
+
+  getImages(){
+    
   }
 
   loadMember(){

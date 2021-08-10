@@ -23,6 +23,8 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+
 
 
 @NgModule({
@@ -49,7 +51,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right"
     }),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    NgxGalleryModule
   ],
   providers: [UsersService, RolesService, AuthenticationService,
   {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
