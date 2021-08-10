@@ -20,9 +20,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
-import { MembersService } from './Services/Api/api/members.service';
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 @NgModule({
@@ -48,9 +48,10 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right"
-    })
+    }),
+    TabsModule.forRoot()
   ],
-  providers: [UsersService, RolesService, AuthenticationService, MembersService,
+  providers: [UsersService, RolesService, AuthenticationService,
   {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
