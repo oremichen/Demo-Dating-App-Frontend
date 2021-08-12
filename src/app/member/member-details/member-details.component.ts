@@ -21,19 +21,31 @@ export class MemberDetailsComponent implements OnInit {
 
     this.galleryOptions=[
       {
-        width:'500px',
+        width:'620px',
         height: '500px',
         previewDescription: true,
-        preview: false,
+        preview: true,
         thumbnailsColumns: 4,            //this will come from the number of images in the databse
         imageAnimation: NgxGalleryAnimation.Slide
         
       }
     ]
+   
+   
   }
 
-  getImages(){
-    
+  getImages(): NgxGalleryImage[] {
+    const imageurls = [];
+   
+    for(const photo of this.member.photo){
+      imageurls.push({
+        small: photo?.url,
+        medium: photo?.url,
+        big: photo?.url,
+        description: photo?.url
+      })
+    }
+    return imageurls
   }
 
   loadMember(){
@@ -41,6 +53,7 @@ export class MemberDetailsComponent implements OnInit {
     this._userservice.apiUsersGetUserByIdGet(id).subscribe(res=>{
       console.log("member", res)
       this.member = res
+      this.galleryImages= this.getImages();
     })
   }
 
