@@ -1,7 +1,7 @@
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="color: aliceblue;">
     <div class="container">
-      <a class="navbar-brand" style="color: aliceblue;">Dating App</a>
+      <a class="navbar-brand" >Dating App</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,12 +23,12 @@
 
       <div class="btn-group" dropdown *ngIf="authenticationService.currentUser$ | async">
         <button id="button-basic" dropdownToggle type="button" class="btn btn-default dropdown-toggle"
-                aria-controls="dropdown-basic">
-          Welcome User <span class="caret"></span>
+                aria-controls="dropdown-basic" style="color: aliceblue;">
+         welcome {{name}} <span class="caret"></span>
         </button>
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
             role="menu" aria-labelledby="button-basic">
-          <li role="menuitem"><a class="dropdown-item" href="#">Edit Profile</a></li>
+          <li role="menuitem"><a routerLink="/members/edit" class="dropdown-item" href="#">Edit Profile</a></li>
           <li class="divider dropdown-divider"></li>
           <li role="menuitem" (click)="logout()"><a class="dropdown-item" href="#">Logout</a></li>
         </ul>

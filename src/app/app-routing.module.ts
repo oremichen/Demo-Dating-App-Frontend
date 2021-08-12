@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberDetailsComponent } from './member/member-details/member-details.component';
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guard/auth.guard';
@@ -15,6 +16,7 @@ const routes: Routes = [
    children: [
     {path: 'member', component: MemberListComponent},
     {path: 'member/:id', component: MemberDetailsComponent},
+    {path: 'members/edit', component: MemberEditComponent},
     {path: 'list', component: ListsComponent},
     {path: 'messages', component: MessagesComponent},
    ]

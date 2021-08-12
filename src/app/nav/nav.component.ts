@@ -16,6 +16,7 @@ export class NavComponent implements OnInit {
   password: string=""
   userPassword: string="password"
   username: string="";
+  name: string
   fieldTextType: boolean=true;
   loginUser: LoginUser={}
   userDto: UserDto={}
@@ -33,10 +34,10 @@ export class NavComponent implements OnInit {
 
     getCurrentUser(){
       this.authenticationService.currentUser$.subscribe(user=>{
-       // debugger
-       // this.loggedin=!!user
-       console.log("loggin", this.loggedin)
        if(user!= null){
+        this.name = user.name.toLocaleLowerCase()
+        // this.loggedin=!!user
+        console.log("loggin", this.loggedin)
         this.login
         return
        }
