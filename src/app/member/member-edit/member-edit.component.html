@@ -4,7 +4,7 @@
     </div>
     <div class="col-8">
         <div class="alert alert-info">
-            <p><strong>Information:</strong>You have made changes. Any unsaved changes will be lost</p>
+            <strong>Information:</strong>You have made changes. Any unsaved changes will be lost
         </div>
     </div>
 
@@ -33,17 +33,16 @@
             </div>
             <div class="card-footer">
                  <!--use (btn-block) if you want a button to take the full width of a container--->
-                    <button class="btn btn-success btn-block">Save Changes</button>
+                    <button form="editForm" type="submit" class="btn btn-success btn-block">Save Changes</button>
             </div>
         </div>
-      
     </div>
 
     <div class="col-8">
         <tabset class="member-tabset">
            
             <tab heading="About {{member.knownAs}}">
-                <form>
+                <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
                     <h4>Description</h4>
                     <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" rows="6"></textarea>
                     <h4 class="mt-2">Looking for</h4>

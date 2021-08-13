@@ -23,6 +23,7 @@ import { LoginUser } from '../model/loginUser';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { ServiceUrlConnections } from 'src/app/ServiceUrlConnections';
+import { MembersDto } from '../model/membersDto';
 
 
 
@@ -112,6 +113,19 @@ export class UsersService {
         let headers = this.defaultHeaders;
         return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    public updateUserPut(body?: MembersDto, observe?: 'body', reportProgress?: boolean): Observable<string> {
+        let headers = this.defaultHeaders;
+        return this.httpClient.request<string>('put',`${this.basePath}/api/Users/UpdateUser`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
