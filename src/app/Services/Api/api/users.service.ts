@@ -24,6 +24,7 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 import { ServiceUrlConnections } from 'src/app/ServiceUrlConnections';
 import { MembersDto } from '../model/membersDto';
+import { UpdateMembersDto } from '../model/updateMembersDto';
 
 
 
@@ -121,18 +122,53 @@ export class UsersService {
         );
     }
 
-    public updateUserPut(body?: MembersDto, observe?: 'body', reportProgress?: boolean): Observable<string> {
-        let headers = this.defaultHeaders;
-        return this.httpClient.request<string>('put',`${this.basePath}/api/Users/UpdateUser`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+     public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe?: 'body', reportProgress?: boolean): Observable<string>;
+     public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+     public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+     public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+ 
+ 
+         let headers = this.defaultHeaders;
+ 
+         // to determine the Accept header
+         let httpHeaderAccepts: string[] = [
+             'text/plain',
+             'application/json',
+             'text/json'
+         ];
+         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+         if (httpHeaderAcceptSelected != undefined) {
+             headers = headers.set('Accept', httpHeaderAcceptSelected);
+         }
+ 
+         // to determine the Content-Type header
+         const consumes: string[] = [
+             'application/json',
+             'text/json',
+             'application/_*+json'
+         ];
+         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+         if (httpContentTypeSelected != undefined) {
+             headers = headers.set('Content-Type', httpContentTypeSelected);
+         }
+        
+         return this.httpClient.request<string>('put',`${this.basePath}/api/Users/UpdateUser`,
+             {
+                 body: body,
+                 withCredentials: this.configuration.withCredentials,
+                 headers: headers,
+                 observe: observe,
+                 reportProgress: reportProgress
+             }
+         );
+     }
 
     /**
      * 
