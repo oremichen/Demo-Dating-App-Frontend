@@ -25,11 +25,16 @@ import { Configuration }                                     from '../configurat
 import { ServiceUrlConnections } from 'src/app/ServiceUrlConnections';
 import { MembersDto } from '../model/membersDto';
 import { UpdateMembersDto } from '../model/updateMembersDto';
+import { Members } from '../model/members';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 
 @Injectable()
 export class UsersService {
+
+    members: Members[]=[]
 
     protected basePath = ServiceUrlConnections.serviceUrl;
     public configuration = new Configuration();
@@ -111,6 +116,7 @@ export class UsersService {
 
     
     public apiUsersGetAllUsersGet(observe?: 'body', reportProgress?: boolean): Observable<any> {
+        if(this.members.length > 0) return of (this.members)
         let headers = this.defaultHeaders;
         return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`,
             {
@@ -119,8 +125,17 @@ export class UsersService {
                 observe: observe,
                 reportProgress: reportProgress
             }
-        );
+        ).pipe(map(members=>{
+            this.members = members
+            return members
+        }));
     }
+
+    public updateUserPut(member: UpdateMembersDto){
+        return this.httpClient.put<string>(this.basePath + '/api/Users/UpdateUser', member)
+
+    }
+   
 
     /**
      * 
@@ -167,7 +182,9 @@ export class UsersService {
                  observe: observe,
                  reportProgress: reportProgress
              }
-         );
+         ).pipe(map((res)=>{
+            //const index = this.members.find()
+         }));
      }
 
     /**
@@ -182,6 +199,8 @@ export class UsersService {
     public apiUsersGetUserByIdGet(id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public apiUsersGetUserByIdGet(id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        const member = this.members.find(x=> x.id === id)
+        if(member !== undefined) return of (member)
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (id !== undefined && id !== null) {

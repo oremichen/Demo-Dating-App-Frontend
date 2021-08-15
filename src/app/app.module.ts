@@ -25,6 +25,8 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 
 
 
@@ -54,10 +56,13 @@ import { MemberEditComponent } from './member/member-edit/member-edit.component'
       positionClass: "toast-bottom-right"
     }),
     TabsModule.forRoot(),
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxSpinnerModule
   ],
   providers: [UsersService, RolesService, AuthenticationService,
-  {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
+  {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
+  {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi:true}
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
