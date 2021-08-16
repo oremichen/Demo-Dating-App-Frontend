@@ -36,8 +36,6 @@ export class NavComponent implements OnInit {
       this.authenticationService.currentUser$.subscribe(user=>{
        if(user!= null){
         this.name = user.name.toLocaleLowerCase()
-        // this.loggedin=!!user
-        console.log("loggin", this.loggedin)
         this.login
         return
        }

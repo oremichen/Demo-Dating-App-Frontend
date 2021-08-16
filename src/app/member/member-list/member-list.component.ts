@@ -21,7 +21,6 @@ export class MemberListComponent implements OnInit {
   loadMembers(){
 
     this._userservice.apiUsersGetAllUsersGet().subscribe(res=>{
-      console.log("result", res)
       this.members = res
     })
   }

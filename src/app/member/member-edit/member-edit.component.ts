@@ -3,9 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/Services/Api';
 import { Members } from 'src/app/Services/Api/model/members';
-import { MembersDto } from 'src/app/Services/Api/model/membersDto';
 import { UpdateMembersDto } from 'src/app/Services/Api/model/updateMembersDto';
-import { UserDto } from 'src/app/Services/Api/model/userDto';
 
 @Component({
   selector: 'app-member-edit',
@@ -29,7 +27,6 @@ export class MemberEditComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem('user'))
    
     this.user = user
-    console.log("user", this.user)
     this.loadMember(this.user.id)
   }
 
@@ -52,7 +49,6 @@ export class MemberEditComponent implements OnInit {
     this.memeberDto.lastAcvtive = this.member.lastAcvtive
     this.memeberDto.name = this.member.name
 
-    console.log("==>", this.memeberDto)
     this._userservice.apiUsersUpdateUserPut(this.memeberDto).subscribe((res: string)=>{
       let result = res
       this._toastr.success("Profile updated successfully")
@@ -62,5 +58,9 @@ export class MemberEditComponent implements OnInit {
       this._toastr.error("Ooops!! Profile update failed")
     })
 
+  }
+
+  gettoaster(){
+    this._toastr.error("Ooops!!")
   }
 }

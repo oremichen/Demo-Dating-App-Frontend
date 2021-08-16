@@ -116,7 +116,10 @@ export class UsersService {
 
     
     public apiUsersGetAllUsersGet(observe?: 'body', reportProgress?: boolean): Observable<any> {
-        if(this.members.length > 0) return of (this.members)
+       
+        if(this.members.length > 0) 
+        return of (this.members)
+
         let headers = this.defaultHeaders;
         return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`,
             {
@@ -183,8 +186,29 @@ export class UsersService {
                  reportProgress: reportProgress
              }
          ).pipe(map((res)=>{
-            //const index = this.members.find()
+             
+             let member = this.convertmemberModel(body)
+            const index = this.members.indexOf(member)
+            this.members[index] = member
          }));
+     }
+
+     convertmemberModel(model: UpdateMembersDto): Members{
+        let member: Members={}
+
+        member.city = model.city
+        member.id = model.id
+        member.name = model.name
+        member.dateCreated = model.dateCreated
+        member.knownAs= model.knownAs
+        member.lastAcvtive = model.lastAcvtive
+        member.gender = model.gender
+        member.introduction = model.introduction
+        member.lookingFor = model.lookingFor
+        member.interests = model.interests
+        member.dateOfBirth = model.dateOfBirth
+
+        return member
      }
 
     /**
@@ -200,7 +224,8 @@ export class UsersService {
     public apiUsersGetUserByIdGet(id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         const member = this.members.find(x=> x.id === id)
-        if(member !== undefined) return of (member)
+        if(member !== undefined) 
+        return of (member)
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (id !== undefined && id !== null) {
@@ -221,7 +246,6 @@ export class UsersService {
         const consumes: string[] = [
         ];
 
-        console.log(headers)
         return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetUserById`,
             {
                 params: queryParameters,
