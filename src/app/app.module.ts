@@ -27,6 +27,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptor/loading.interceptor';
+import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
 
 
 
@@ -42,7 +43,8 @@ import { LoadingInterceptor } from './_interceptor/loading.interceptor';
     ListsComponent,
     TestErrorsComponent,
     MemberCardComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
