@@ -28,6 +28,8 @@ import { MemberEditComponent } from './member/member-edit/member-edit.component'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { PhotosService } from './Services/Api/api/photos.service';
 
 
 
@@ -59,9 +61,10 @@ import { PhotoEditorComponent } from './member/photo-editor/photo-editor.compone
     }),
     TabsModule.forRoot(),
     NgxGalleryModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FileUploadModule
   ],
-  providers: [UsersService, RolesService, AuthenticationService,
+  providers: [UsersService, RolesService, AuthenticationService,PhotosService,
   {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
   {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi:true}
 ],
