@@ -123,6 +123,97 @@ import { ServiceUrlConnections } from 'src/app/ServiceUrlConnections';
              }
          );
      }
+
+      /**
+     * 
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiPhotosDeletePhotoDelete(id?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiPhotosDeletePhotoDelete(id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiPhotosDeletePhotoDelete(id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiPhotosDeletePhotoDelete(id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Photos/DeletePhoto`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param id 
+     * @param userId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiPhotosSetMainPhotoPut(id?: number, userId?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiPhotosSetMainPhotoPut(id?: number, userId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiPhotosSetMainPhotoPut(id?: number, userId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiPhotosSetMainPhotoPut(id?: number, userId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
+        }
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('userId', <any>userId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('put',`${this.basePath}/api/Photos/SetMainPhoto`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
  
  }
  

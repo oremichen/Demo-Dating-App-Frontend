@@ -21,11 +21,11 @@ export class MemberDetailsComponent implements OnInit {
 
     this.galleryOptions=[
       {
-        width:'620px',
+        width:'500px',
         height: '500px',
         previewDescription: true,
         preview: true,
-        thumbnailsColumns: 4,            //this will come from the number of images in the databse
+        thumbnailsColumns: 6,            //this will come from the number of images in the databse
         imageAnimation: NgxGalleryAnimation.Slide
         
       }
