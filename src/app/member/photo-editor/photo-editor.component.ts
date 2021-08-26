@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/Services/Api';
+import { AuthenticationService } from 'src/app/Services/Api/api/authentication.service';
 import { PhotosService } from 'src/app/Services/Api/api/photos.service';
 import { Members } from 'src/app/Services/Api/model/members';
+import { PhotoDto } from 'src/app/Services/Api/model/photoDto';
 import { ServiceUrlConnections } from 'src/app/ServiceUrlConnections';
 
 @Component({
@@ -16,8 +19,11 @@ export class PhotoEditorComponent implements OnInit {
   hasBaseDropzoneOver = false
   user: any
   basePath = ServiceUrlConnections.serviceUrl;
+  photoId: number
+  photourl: string
 
-  constructor(private _photoService: PhotosService, private _userservice: UsersService) { }
+  constructor(private _photoService: PhotosService, private _userservice: UsersService, 
+    private _authService: AuthenticationService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'))
@@ -30,9 +36,30 @@ export class PhotoEditorComponent implements OnInit {
     this.hasBaseDropzoneOver = e;
   }
 
+  setmainPhoto(photo: PhotoDto){
+    this._photoService.apiPhotosSetMainPhotoPut(photo.id, this.member.id).subscribe(res=>{
+      this.user.url = photo.url
+      this._authService.setCurrentUsers(this.user)
+      this.member.photoUrl = photo.url
+      this.member.photo.forEach(r=> {
+        if(r.isMain) r.isMain = false
+        if(r.id === photo.id) r.isMain = true
+      })
+
+    })
+  }
+
+  deletePhoto(photo: PhotoDto){
+    this._photoService.apiPhotosDeletePhotoDelete(photo.id).subscribe(res=>{
+      this.member.photo = this.member.photo.filter(x=> x.id!== photo.id)
+    },error=>{
+      console.log(error)
+      this.toastr.error(error.error)
+    })
+  }
+
   initializeUploader(){
     this.uploader = new FileUploader({
-      //url: this.basePath + '/api/Photos/UploadphotosAsync',
       url: `${this.basePath}/api/Photos/UploadphotosAsync?id=${this.member.id}`,
       authToken: 'Bearer ' + this.user.token,
       parametersBeforeFiles: true,

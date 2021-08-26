@@ -22,6 +22,7 @@
       </div>
 
       <div class="btn-group" dropdown *ngIf="authenticationService.currentUser$ | async">
+        <img src="{{photoUrl}}" alt="{{name}}" id="img">
         <button id="button-basic" dropdownToggle type="button" class="btn btn-default dropdown-toggle"
                 aria-controls="dropdown-basic" style="color: aliceblue;">
          welcome {{name}} <span class="caret"></span>

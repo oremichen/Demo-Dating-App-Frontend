@@ -24,6 +24,7 @@ export class NavComponent implements OnInit {
   isSuccessful: boolean= true
   isNotSuccessful: boolean= true
   loggedin: boolean= false
+  photoUrl: string
 
   constructor(public authenticationService: AuthenticationService, private _router: Router, 
               private toastr: ToastrService) { }
@@ -36,6 +37,7 @@ export class NavComponent implements OnInit {
       this.authenticationService.currentUser$.subscribe(user=>{
        if(user!= null){
         this.name = user.name.toLocaleLowerCase()
+        this.photoUrl = user.url
         this.login
         return
        }
