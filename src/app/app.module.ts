@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
@@ -9,7 +8,7 @@ import { RolesService } from './Services/Api/api/roles.service';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AuthenticationService } from './Services/Api/api/authentication.service';
 import { HomeComponent } from './home/home.component';
@@ -30,6 +29,7 @@ import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PhotosService } from './Services/Api/api/photos.service';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 
 
@@ -46,7 +46,8 @@ import { PhotosService } from './Services/Api/api/photos.service';
     TestErrorsComponent,
     MemberCardComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +56,7 @@ import { PhotosService } from './Services/Api/api/photos.service';
     CommonModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right"

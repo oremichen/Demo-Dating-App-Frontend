@@ -1,18 +1,12 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
     <h2>Sign up</h2>
     <hr>
-    <div class="form-group">
-        <input type="text" class="form-control" name="Name" 
-        [(ngModel)]="createUser.name" placeholder="Username">
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control" name="Email" 
-        [(ngModel)]="createUser.email" placeholder="Email">
-    </div>
-    <div class="form-group">
-        <input type="password" class="form-control" name="Password" 
-        [(ngModel)]="createUser.password" placeholder="Password">
-    </div>
+   <app-text-input [formControl]='registerForm.controls["name"]' [label]='"Name"'></app-text-input>
+   <app-text-input [formControl]='registerForm.controls["email"]' [label]='"Email"'></app-text-input>
+   <app-text-input [formControl]='registerForm.controls["password"]' [label]='"Password"' 
+   [type]='"password"'></app-text-input>
+   <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm Password"'
+   [type]='"password"'></app-text-input>
     <div class="form-group text-center">
         <button class="btn btn-success mr-2" type="submit">Register</button>
         <button class="btn btn-default mr-2" (click)="cancel()">Cancel</button>
