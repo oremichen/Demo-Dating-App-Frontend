@@ -30,6 +30,7 @@ import { PhotoEditorComponent } from './member/photo-editor/photo-editor.compone
 import { FileUploadModule } from 'ng2-file-upload';
 import { PhotosService } from './Services/Api/api/photos.service';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 
 
@@ -62,6 +63,7 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
       positionClass: "toast-bottom-right"
     }),
     TabsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     NgxGalleryModule,
     NgxSpinnerModule,
     FileUploadModule
