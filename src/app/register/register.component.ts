@@ -18,11 +18,14 @@ export class RegisterComponent implements OnInit {
   user: UserDto={}
   createUser: CreateUsersDto={}
   registerForm: FormGroup
+  maxDate: Date;
 
   constructor(private _usersService: UsersService,  private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm()
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() -18)
   }
 
   initializeForm(){
@@ -57,17 +60,16 @@ export class RegisterComponent implements OnInit {
 
   register(){
     console.log(this.registerForm.value)
-    console.log(this.registerForm.status)
-  //  this.createUser.dateCreated = new Date
-  //   this._usersService.apiUsersCreateNewUserPost(this.createUser).subscribe(res=>{
-  //     this.user = res
-  //     console.log(this.user)
-  //     this.cancel()
-  //     this.toastr.success("Registration was successful, check your mail");
-  //   }, (error) =>{
-  //     console.log(error.error)
-  //     this.toastr.error("Error! Something went wrong, check input and try again");
-  //     })
+   this.createUser.dateCreated = new Date
+    this._usersService.apiUsersCreateNewUserPost(this.registerForm.value).subscribe(res=>{
+      this.user = res
+      console.log(this.user)
+      this.cancel()
+      this.toastr.success("Registration was successful, check your mail");
+    }, (error) =>{
+      console.log(error.error)
+      this.toastr.error("Error! Something went wrong, check input and try again");
+      })
   }
 
   cancel(){

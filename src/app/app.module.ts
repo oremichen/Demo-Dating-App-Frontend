@@ -30,7 +30,8 @@ import { PhotoEditorComponent } from './member/photo-editor/photo-editor.compone
 import { FileUploadModule } from 'ng2-file-upload';
 import { PhotosService } from './Services/Api/api/photos.service';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DateInputComponent } from './_forms/date-input/date-input.component';
 
 
 
@@ -48,7 +49,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     MemberCardComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    TextInputComponent
+    TextInputComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,

@@ -15,4 +15,10 @@ export interface CreateUsersDto {
     email?: string;
     password?: string;
     dateCreated?: Date;
+    knownAs?: string;
+    lastActive?: Date;
+    Gender?: string;
+    city?: string;
+    dateOfBirth?: Date;
+    
 }
