@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../Services/Api';
 import { CreateUsersDto } from '../Services/Api/model/createUsersDto';
@@ -19,8 +20,10 @@ export class RegisterComponent implements OnInit {
   createUser: CreateUsersDto={}
   registerForm: FormGroup
   maxDate: Date;
+  validationErrors: string=''
 
-  constructor(private _usersService: UsersService,  private toastr: ToastrService, private fb: FormBuilder) { }
+  constructor(private _usersService: UsersService,  private toastr: ToastrService, private fb: FormBuilder,
+    private _router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm()
@@ -59,21 +62,24 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    console.log(this.registerForm.value)
-   this.createUser.dateCreated = new Date
+    this.createUser.dateCreated = new Date
     this._usersService.apiUsersCreateNewUserPost(this.registerForm.value).subscribe(res=>{
       this.user = res
-      console.log(this.user)
-      this.cancel()
+      this._router.navigateByUrl('/member')
+      //this.cancel()
       this.toastr.success("Registration was successful, check your mail");
     }, (error) =>{
-      console.log(error.error)
-      this.toastr.error("Error! Something went wrong, check input and try again");
+     this.validationErrors = "Registration failed, try again"
+   
       })
   }
 
   cancel(){
     this.cancelToHomePage.emit(false)
+  }
+
+  close(){
+    this.validationErrors = ""
   }
 
 }
