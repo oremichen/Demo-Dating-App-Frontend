@@ -28,6 +28,7 @@ import { UpdateMembersDto } from '../model/updateMembersDto';
 import { Members } from '../model/members';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Responses } from '../model/response';
 
 
 
@@ -76,9 +77,9 @@ export class UsersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'body', reportProgress?: boolean): Observable<Responses>;
+    public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Responses>>;
+    public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Responses>>;
     public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -103,7 +104,7 @@ export class UsersService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Users/CreateNewUser`,
+        return this.httpClient.request<Responses>('post',`${this.basePath}/api/Users/CreateNewUser`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

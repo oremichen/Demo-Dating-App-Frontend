@@ -3,7 +3,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Vali
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../Services/Api';
+import { AuthenticationService } from '../Services/Api/api/authentication.service';
 import { CreateUsersDto } from '../Services/Api/model/createUsersDto';
+import { LoginUser } from '../Services/Api/model/loginUser';
 import { UserDto } from '../Services/Api/model/userDto';
 
 @Component({
@@ -21,9 +23,10 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup
   maxDate: Date;
   validationErrors: string=''
+  loginUser: LoginUser={}
 
   constructor(private _usersService: UsersService,  private toastr: ToastrService, private fb: FormBuilder,
-    private _router: Router) { }
+    private _router: Router, public authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.initializeForm()
@@ -62,16 +65,28 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.createUser.dateCreated = new Date
+    this.createUser = this.registerForm.value
     this._usersService.apiUsersCreateNewUserPost(this.registerForm.value).subscribe(res=>{
-      this.user = res
-      this._router.navigateByUrl('/member')
-      //this.cancel()
-      this.toastr.success("Registration was successful, check your mail");
+    this.user = res.userDto
+    this.toastr.success("Registration was successful, check your mail");
+    this.login(this.user.email, this.createUser.password)
+     
     }, (error) =>{
      this.validationErrors = "Registration failed, try again"
    
       })
+  }
+
+  login(email: string, password: string){
+    this.loginUser.email = email
+    this.loginUser.password = password
+    this.authenticationService.loginPost(this.loginUser).subscribe(res=>{
+    this.gotoMemberPage()
+    })
+  }
+
+  gotoMemberPage(){
+    this._router.navigate(['/member'])
   }
 
   cancel(){

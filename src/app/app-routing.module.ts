@@ -15,7 +15,7 @@ const routes: Routes = [
    runGuardsAndResolvers: 'always',
    canActivate: [AuthGuard],
    children: [
-    {path: 'member', component: MemberListComponent, },
+    {path: 'member', component: MemberListComponent},
     {path: 'member/:id', component: MemberDetailsComponent},
     {path: 'members/edit', component: MemberEditComponent, canDeactivate:[PreventUnsavedChangesGuard]},
     {path: 'list', component: ListsComponent},
