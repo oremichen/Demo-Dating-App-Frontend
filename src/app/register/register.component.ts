@@ -68,7 +68,6 @@ export class RegisterComponent implements OnInit {
     this.createUser = this.registerForm.value
     this._usersService.apiUsersCreateNewUserPost(this.registerForm.value).subscribe(res=>{
     this.user = res.userDto
-    this.toastr.success("Registration was successful, check your mail");
     this.login(this.user.email, this.createUser.password)
      
     }, (error) =>{
