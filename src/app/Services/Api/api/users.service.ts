@@ -29,6 +29,7 @@ import { Members } from '../model/members';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Responses } from '../model/response';
+import { PagenatedResult, Pagenation } from '../model/pagenation';
 
 
 
@@ -36,6 +37,7 @@ import { Responses } from '../model/response';
 export class UsersService {
 
     members: Members[]=[]
+    pagenatedResult: PagenatedResult<Members[]> = new PagenatedResult<Members[]>()
 
     protected basePath = ServiceUrlConnections.serviceUrl;
     public configuration = new Configuration();
@@ -45,7 +47,7 @@ export class UsersService {
     //     })
        
     
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(private httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -111,28 +113,37 @@ export class UsersService {
                 headers: headers,
                 observe: observe,
                 reportProgress: reportProgress
+                
             }
         );
     }
 
     
-    public apiUsersGetAllUsersGet(observe?: 'body', reportProgress?: boolean): Observable<any> {
-       
-        if(this.members.length > 0) 
-        return of (this.members)
+    // public apiUsersGetAllUsersGet(): Observable<any> {
+    //     if(this.members.length > 0) return of (this.members)
 
-        let headers = this.defaultHeaders;
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        ).pipe(map(members=>{
-            this.members = members
-            return members
-        }));
+    //     return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`        
+    //     ).pipe(map(members=>{
+    //         this.members = members
+    //         return members
+    //     }));
+    // }
+
+    public apiUsersGetAllUsersGet(page?: number, itemsPerPage?: number): Observable<any> {
+        let params = new HttpParams();
+        if(page!= null && itemsPerPage!= null){
+            params = params.append('pageNumber', page.toString())
+            params = params.append('pageSize', itemsPerPage.toString())
+        }
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`, {observe:'response', params}).pipe(
+            map(response=>{
+                this.pagenatedResult.result = response.body
+                if(response.headers.get('Pagination')!== null){
+                    this.pagenatedResult.pagenation = JSON.parse(response.headers.get('Pagination'))
+                }
+                return this.pagenatedResult
+            })
+        )
     }
 
     public updateUserPut(member: UpdateMembersDto){
