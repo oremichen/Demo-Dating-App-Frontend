@@ -12,9 +12,10 @@ import { Pagenation } from 'src/app/Services/Api/model/pagenation';
 export class MemberListComponent implements OnInit {
 
   members: Members[]=[]
-  pagenation: Pagenation
+  pagenation: Pagenation={}
   pageNumber = 1
   pageSize= 5
+  pg: string
 
   constructor(public _userservice:UsersService) { }
 
@@ -24,11 +25,16 @@ export class MemberListComponent implements OnInit {
 
   loadMembers(){
 
-    this._userservice.apiUsersGetAllUsersGet().subscribe(res=>{
+    this._userservice.apiUsersGetAllUsersGet(this.pageNumber, this.pageSize).subscribe(res=>{
       this.members = res.result
       this.pagenation = res.pagenation
+      //this.pg = this.pagenation.totalItems.toString()
     })
   }
 
+  pageChanged(event: any){
+    this.pageNumber = event.page;
+    this.loadMembers()
+  }
   
 }
