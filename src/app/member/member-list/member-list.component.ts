@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { UsersService } from 'src/app/Services/Api/api/api';
+import { AuthenticationService } from 'src/app/Services/Api/api/authentication.service';
 import { Members } from 'src/app/Services/Api/model/members';
 import { Pagenation } from 'src/app/Services/Api/model/pagenation';
+import { UserDto } from 'src/app/Services/Api/model/userDto';
+import { UserParams } from 'src/app/Services/Api/model/userParams';
 
 @Component({
   selector: 'app-member-list',
@@ -13,27 +17,39 @@ export class MemberListComponent implements OnInit {
 
   members: Members[]=[]
   pagenation: Pagenation={}
-  pageNumber = 1
-  pageSize= 5
-  pg: string
+  Id: number
+  userParams: UserParams;
+  user: UserDto;
+  genderList= [{value: 'male', display: 'Males'}, {value:'females', display: 'Females'}]
 
-  constructor(public _userservice:UsersService) { }
+  constructor(public _userservice:UsersService, public authenticationService: AuthenticationService) 
+  {
+    this.authenticationService.currentUser$.pipe(take(1)).subscribe(user=>{
+      this.user = user
+      this.userParams = new UserParams(user);
+    })
+   }
 
   ngOnInit(): void {
+    let user = JSON.parse(localStorage.getItem('user'))
+    this.Id = user.id
     this.loadMembers()
   }
 
   loadMembers(){
-
-    this._userservice.apiUsersGetAllUsersGet(this.pageNumber, this.pageSize).subscribe(res=>{
+    this._userservice.apiUsersGetAllUsersGet(this.userParams, this.Id).subscribe(res=>{
       this.members = res.result
       this.pagenation = res.pagenation
-      //this.pg = this.pagenation.totalItems.toString()
     })
   }
 
+  resetFilters(){
+    this.userParams = new UserParams(this.user)
+    this.loadMembers()
+  }
+
   pageChanged(event: any){
-    this.pageNumber = event.page;
+    this.userParams.pageNumber = event.page;
     this.loadMembers()
   }
   

@@ -30,6 +30,7 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Responses } from '../model/response';
 import { PagenatedResult, Pagenation } from '../model/pagenation';
+import { UserParams } from '../model/userParams';
 
 
 
@@ -129,13 +130,15 @@ export class UsersService {
     //     }));
     // }
 
-    public apiUsersGetAllUsersGet(page?: number, itemsPerPage?: number): Observable<any> {
-        let params = new HttpParams();
-        if(page!= null && itemsPerPage!= null){
-            params = params.append('pageNumber', page.toString())
-            params = params.append('pageSize', itemsPerPage.toString())
-        }
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`, {observe:'response', params}).pipe(
+    public apiUsersGetAllUsersGet(userParams: UserParams, Id: number): Observable<any> {
+       let params = this.getPaginationheaders(userParams.pageNumber, userParams.pageSize)
+
+        params = params.append('minAge', userParams.minAge.toString());
+        params = params.append('maxAge', userParams.maxAge.toString())
+        params = params.append('gender', userParams.gender)
+
+
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers/${Id}`, {observe:'response', params}).pipe(
             map(response=>{
                 this.pagenatedResult.result = response.body
                 if(response.headers.get('Pagination')!== null){
@@ -146,7 +149,16 @@ export class UsersService {
         )
     }
 
-    public updateUserPut(member: UpdateMembersDto){
+    private getPaginationheaders(pageNumber: number, pageSize: number){
+        let params = new HttpParams();
+            params = params.append('pageNumber', pageNumber.toString())
+            params = params.append('pageSize', pageSize.toString())
+
+            return params
+       
+    }
+
+    public updateUserPut(member: UpdateMembersDto): Observable<string> {
         return this.httpClient.put<string>(this.basePath + '/api/Users/UpdateUser', member)
 
     }

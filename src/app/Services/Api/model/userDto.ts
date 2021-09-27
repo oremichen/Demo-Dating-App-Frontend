@@ -16,4 +16,5 @@ export interface UserDto {
     email?: string;
     url?: string;
     token?: string;
+    gender?: string;
 }
