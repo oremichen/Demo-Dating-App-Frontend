@@ -17,15 +17,31 @@
 
         <div class="form-group">
             <label>Show: </label>
-            <select name="gender" style="width: 130px;" [(ngModel)]="userParams.gender" class="form-control ml-l">
+            <select name="gender" style="width: 130px;" [(ngModel)]="userParams.gender" class="form-control ml-l mr-2">
                 <option *ngFor="let gender of genderList" [value]="gender.value">
                     {{gender.display}}
             </select>
         </div>
 
-        <button class="btn btn-primary ml-l" type="submit">Apply Filters</button>
+        <button class="btn btn-primary ml-l mr-2" type="submit">Apply Filters</button>
         <button (click)="resetFilters()" class="btn btn-info ml-l" type="submit">Reset Filters</button>
        
+        <div class="col">
+            <div class="btn-group float-end">
+                <button class="btn btn-primary" name="orderBy" 
+                (click)="loadMembers()"
+                btnRadio = "lastActive"
+                type="button"
+                [(ngModel)] = userParams.orderBy
+                > Last Active </button>
+                <button class="btn btn-primary" name="orderBy" 
+                (click)="loadMembers()"
+                btnRadio = "created"
+                type="button"
+                [(ngModel)] = userParams.orderBy
+                > Newest Member  </button>
+            </div>
+        </div>
     </form>
 </div>
 
@@ -46,5 +62,5 @@
      nextText="&rsaquo;"
      firstText="&laquo;"
      lastText="&raquo;">
-</pagination>
+    </pagination>
 </div>

@@ -20,7 +20,7 @@ export class MemberListComponent implements OnInit {
   Id: number
   userParams: UserParams;
   user: UserDto;
-  genderList= [{value: 'male', display: 'Males'}, {value:'females', display: 'Females'}]
+  genderList= [{value: 'male', display: 'Males'}, {value:'female', display: 'Females'}]
 
   constructor(public _userservice:UsersService, public authenticationService: AuthenticationService) 
   {
