@@ -136,6 +136,7 @@ export class UsersService {
         params = params.append('minAge', userParams.minAge.toString());
         params = params.append('maxAge', userParams.maxAge.toString())
         params = params.append('gender', userParams.gender)
+        params = params.append('orderBy', userParams.orderBy)
 
 
         return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers/${Id}`, {observe:'response', params}).pipe(

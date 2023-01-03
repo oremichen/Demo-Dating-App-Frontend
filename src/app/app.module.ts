@@ -33,6 +33,7 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DateInputComponent } from './_forms/date-input/date-input.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,9 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     NgxGalleryModule,
     NgxSpinnerModule,
     FileUploadModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot()
+
   ],
   providers: [UsersService, RolesService, AuthenticationService,PhotosService,
   {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
