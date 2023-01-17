@@ -38,6 +38,7 @@ export class MemberListComponent implements OnInit {
 
   loadMembers(){
     this._userservice.apiUsersGetAllUsersGet(this.userParams, this.Id).subscribe(res=>{
+      console.log("==>", res)
       this.members = res.result
       this.pagenation = res.pagenation
     })

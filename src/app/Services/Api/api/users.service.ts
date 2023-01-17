@@ -39,6 +39,7 @@ export class UsersService {
 
     members: Members[]=[]
     pagenatedResult: PagenatedResult<Members[]> = new PagenatedResult<Members[]>()
+    memberCache = new Map();
 
     protected basePath = ServiceUrlConnections.serviceUrl;
     public configuration = new Configuration();
@@ -131,6 +132,12 @@ export class UsersService {
     // }
 
     public apiUsersGetAllUsersGet(userParams: UserParams, Id: number): Observable<any> {
+        console.log(Object.values(userParams).join('-'))
+
+        const response = this.memberCache.get(Object.values(userParams).join('-'))
+
+        if(response) return of(response)
+
        let params = this.getPaginationheaders(userParams.pageNumber, userParams.pageSize)
 
         params = params.append('minAge', userParams.minAge.toString());
@@ -145,7 +152,9 @@ export class UsersService {
                 if(response.headers.get('Pagination')!== null){
                     this.pagenatedResult.pagenation = JSON.parse(response.headers.get('Pagination'))
                 }
-                return this.pagenatedResult
+                
+                this.memberCache.set(Object.values(userParams).join('-'), response)
+                return response
             })
         )
     }
