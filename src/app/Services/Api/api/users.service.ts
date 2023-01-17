@@ -31,6 +31,7 @@ import { map } from 'rxjs/operators';
 import { Responses } from '../model/response';
 import { PagenatedResult, Pagenation } from '../model/pagenation';
 import { UserParams } from '../model/userParams';
+import { AuthenticationService } from './authentication.service';
 
 
 
@@ -49,7 +50,7 @@ export class UsersService {
     //     })
        
     
-    constructor(private httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(private httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration, public authenticationService: AuthenticationService) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -120,23 +121,11 @@ export class UsersService {
         );
     }
 
-    
-    // public apiUsersGetAllUsersGet(): Observable<any> {
-    //     if(this.members.length > 0) return of (this.members)
-
-    //     return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetAllUsers`        
-    //     ).pipe(map(members=>{
-    //         this.members = members
-    //         return members
-    //     }));
-    // }
-
     public apiUsersGetAllUsersGet(userParams: UserParams, Id: number): Observable<any> {
-        console.log(Object.values(userParams).join('-'))
 
-        const response = this.memberCache.get(Object.values(userParams).join('-'))
+        // const response = this.memberCache.get(Object.values(userParams).join('-'))
 
-        if(response) return of(response)
+        // if(response) return of(response)
 
        let params = this.getPaginationheaders(userParams.pageNumber, userParams.pageSize)
 
@@ -153,19 +142,10 @@ export class UsersService {
                     this.pagenatedResult.pagenation = JSON.parse(response.headers.get('Pagination'))
                 }
                 
-                this.memberCache.set(Object.values(userParams).join('-'), response)
-                return response
+                //this.memberCache.set(Object.values(userParams).join('-'), this.pagenatedResult)
+                return this.pagenatedResult
             })
         )
-    }
-
-    private getPaginationheaders(pageNumber: number, pageSize: number){
-        let params = new HttpParams();
-            params = params.append('pageNumber', pageNumber.toString())
-            params = params.append('pageSize', pageSize.toString())
-
-            return params
-       
     }
 
     public updateUserPut(member: UpdateMembersDto): Observable<string> {
@@ -173,14 +153,6 @@ export class UsersService {
 
     }
    
-
-    /**
-     * 
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
      public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe?: 'body', reportProgress?: boolean): Observable<string>;
      public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
      public apiUsersUpdateUserPut(body?: UpdateMembersDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
@@ -227,77 +199,13 @@ export class UsersService {
          }));
      }
 
-     convertmemberModel(model: UpdateMembersDto): Members{
-        let member: Members={}
-
-        member.city = model.city
-        member.id = model.id
-        member.name = model.name
-        member.dateCreated = model.dateCreated
-        member.knownAs= model.knownAs
-        member.lastAcvtive = model.lastAcvtive
-        member.gender = model.gender
-        member.introduction = model.introduction
-        member.lookingFor = model.lookingFor
-        member.interests = model.interests
-        member.dateOfBirth = model.dateOfBirth
-
-        return member
+     apiUsersGetUserByIdGet(id: number){
+        let params = new HttpParams().set('id', id.toString());
+        const member = [...this.memberCache.values()]
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetUserById`, {params})
      }
 
-    /**
-     * 
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public apiUsersGetUserByIdGet(id?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiUsersGetUserByIdGet(id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiUsersGetUserByIdGet(id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiUsersGetUserByIdGet(id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        const member = this.members.find(x=> x.id === id)
-        if(member !== undefined) 
-        return of (member)
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetUserById`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
     public apiUsersLoginPost(body?: LoginUser, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public apiUsersLoginPost(body?: LoginUser, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public apiUsersLoginPost(body?: LoginUser, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
@@ -334,6 +242,30 @@ export class UsersService {
                 reportProgress: reportProgress
             }
         );
+    }
+
+
+    convertmemberModel(model: UpdateMembersDto): Members{
+        let member: Members={}
+        member.city = model.city
+        member.id = model.id
+        member.name = model.name
+        member.dateCreated = model.dateCreated
+        member.knownAs= model.knownAs
+        member.lastAcvtive = model.lastAcvtive
+        member.gender = model.gender
+        member.introduction = model.introduction
+        member.lookingFor = model.lookingFor
+        member.interests = model.interests
+        member.dateOfBirth = model.dateOfBirth
+        return member
+     }
+
+     private getPaginationheaders(pageNumber: number, pageSize: number){
+        let params = new HttpParams();
+            params = params.append('pageNumber', pageNumber.toString())
+            params = params.append('pageSize', pageSize.toString())
+            return params 
     }
 
 }

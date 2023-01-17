@@ -51,7 +51,6 @@ export class MemberDetailsComponent implements OnInit {
   loadMember(){
     let id = parseInt(this._route.snapshot.paramMap.get('id'))
     this._userservice.apiUsersGetUserByIdGet(id).subscribe(res=>{
-      console.log("member", res)
       this.member = res
       this.galleryImages= this.getImages();
     })
