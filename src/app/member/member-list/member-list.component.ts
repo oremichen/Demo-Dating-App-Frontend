@@ -24,10 +24,7 @@ export class MemberListComponent implements OnInit {
 
   constructor(public _userservice:UsersService, public authenticationService: AuthenticationService) 
   {
-    this.authenticationService.currentUser$.pipe(take(1)).subscribe(user=>{
-      this.user = user
-      this.userParams = new UserParams(user);
-    })
+    this.userParams = this._userservice.getUserParams();
    }
 
   ngOnInit(): void {
@@ -38,19 +35,19 @@ export class MemberListComponent implements OnInit {
 
   loadMembers(){
     this._userservice.apiUsersGetAllUsersGet(this.userParams, this.Id).subscribe(res=>{
-     // console.log("==>", res)
       this.members = res.result
       this.pagenation = res.pagenation
     })
   }
 
   resetFilters(){
-    this.userParams = new UserParams(this.user)
+    this.userParams = this._userservice.resetUserParams()
     this.loadMembers()
   }
 
   pageChanged(event: any){
     this.userParams.pageNumber = event.page;
+    this._userservice.setUserParams(this.userParams)
     this.loadMembers()
   }
   

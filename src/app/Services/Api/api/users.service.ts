@@ -27,11 +27,12 @@ import { MembersDto } from '../model/membersDto';
 import { UpdateMembersDto } from '../model/updateMembersDto';
 import { Members } from '../model/members';
 import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Responses } from '../model/response';
 import { PagenatedResult, Pagenation } from '../model/pagenation';
 import { UserParams } from '../model/userParams';
 import { AuthenticationService } from './authentication.service';
+import { UserDto } from '../model/userDto';
 
 
 
@@ -41,6 +42,8 @@ export class UsersService {
     members: Members[]=[]
     pagenatedResult: PagenatedResult<Members[]> = new PagenatedResult<Members[]>()
     memberCache = new Map();
+    userParams: UserParams;
+    user: UserDto;
 
     protected basePath = ServiceUrlConnections.serviceUrl;
     public configuration = new Configuration();
@@ -51,6 +54,12 @@ export class UsersService {
        
     
     constructor(private httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration, public authenticationService: AuthenticationService) {
+
+        this.authenticationService.currentUser$.pipe(take(1)).subscribe(user=>{
+            this.user = user
+            this.userParams = new UserParams(user);
+          })
+          
         if (basePath) {
             this.basePath = basePath;
         }
@@ -74,14 +83,23 @@ export class UsersService {
         return false;
     }
 
+    getUserParams(){
+        return this.userParams
+    }
 
-    /**
-     * 
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
+    setUserParams(userParams: UserParams){
+        this.userParams = userParams
+    }
+
+    resetUserParams(){
+        if(this.user){
+            this.userParams = new UserParams(this.user)
+            return this.userParams
+        }
+
+        return this.userParams
+    }
+    
     public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'body', reportProgress?: boolean): Observable<Responses>;
     public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Responses>>;
     public apiUsersCreateNewUserPost(body?: CreateUsersDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Responses>>;
