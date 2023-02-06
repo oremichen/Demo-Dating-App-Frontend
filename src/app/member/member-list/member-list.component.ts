@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { UsersService } from 'src/app/Services/Api/api/api';
-import { AuthenticationService } from 'src/app/Services/Api/api/authentication.service';
 import { Members } from 'src/app/Services/Api/model/members';
 import { Pagenation } from 'src/app/Services/Api/model/pagenation';
 import { UserDto } from 'src/app/Services/Api/model/userDto';
@@ -22,7 +19,7 @@ export class MemberListComponent implements OnInit {
   user: UserDto;
   genderList= [{value: 'male', display: 'Males'}, {value:'female', display: 'Females'}]
 
-  constructor(public _userservice:UsersService, public authenticationService: AuthenticationService) 
+  constructor(private _userservice:UsersService) 
   {
     this.userParams = this._userservice.getUserParams();
    }

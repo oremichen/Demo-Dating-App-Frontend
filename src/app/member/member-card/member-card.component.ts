@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { UsersService } from 'src/app/Services/Api';
 import { Members } from 'src/app/Services/Api/model/members';
 
 @Component({
@@ -9,10 +11,17 @@ import { Members } from 'src/app/Services/Api/model/members';
 export class MemberCardComponent implements OnInit {
   @Input() member: Members
 
-  constructor() { }
+  user = JSON.parse(localStorage.getItem('user'))
+
+  constructor(private _userservice:UsersService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
+  like(){
+    this._userservice.like(this.user.id, this.member.id).subscribe(res=>{
+
+    })
+  }
 
 }
