@@ -14,7 +14,7 @@ export class MemberListComponent implements OnInit {
 
   members: Members[]=[]
   pagenation: Pagenation={}
-  Id: number
+  id: number
   userParams: UserParams;
   user: UserDto;
   genderList= [{value: 'male', display: 'Males'}, {value:'female', display: 'Females'}]
@@ -26,12 +26,12 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'))
-    this.Id = user.id
+    this.id = user.id
     this.loadMembers()
   }
 
   loadMembers(){
-    this._userservice.apiUsersGetAllUsersGet(this.userParams, this.Id).subscribe(res=>{
+    this._userservice.apiUsersGetAllUsersGet(this.userParams, this.id).subscribe(res=>{
       this.members = res.result
       this.pagenation = res.pagenation
     })
