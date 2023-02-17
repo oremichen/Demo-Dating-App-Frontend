@@ -83,8 +83,7 @@ export class UsersService {
     }
 
     like(userId: number, likedBy: number): Observable<any>{
-        let params = new HttpParams().set('userId', userId.toString());
-        return this.httpClient.post<any>(this.basePath + `/api/Users/${likedBy}`, {params})
+        return this.httpClient.post<any>(this.basePath + `/api/Users/${userId}/${likedBy}`,{})
     }
 
     getLikedUsers(predicate: string, id: number){
