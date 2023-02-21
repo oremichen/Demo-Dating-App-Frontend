@@ -23,7 +23,10 @@ export class ListsComponent implements OnInit {
   loadLikes(){
     this.userService.getLikedUsers(this.predicate, this.id).subscribe({
       next: response=> {
-        console.log({response})
+        this.members = response
+      },
+      error: error=>{
+
       }
     })
   }

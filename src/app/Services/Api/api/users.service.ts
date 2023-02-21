@@ -87,7 +87,7 @@ export class UsersService {
     }
 
     getLikedUsers(predicate: string, id: number){
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/${predicate},/${id}`)
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/userwithlikes/${predicate}/${id}`)
     }
    
     apiUsersGetUserByIdGet(id: number){
