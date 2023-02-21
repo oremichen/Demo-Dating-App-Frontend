@@ -18,6 +18,7 @@ export class ListsComponent implements OnInit {
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'))
     this.id = user.id
+    this.loadLikes()
   }
 
   loadLikes(){
