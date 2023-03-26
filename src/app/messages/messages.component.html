@@ -1,1 +1,70 @@
-<p>messages works!</p>
+<div class="mb-4 d-flex">
+ <div class="btn-group" name="container">
+    <button 
+        class="btn btn-primary"
+        btn-Radio="Inbox"
+        [(ngModel)]="container"
+        ngDefaultControl 
+        (click)="loadMessages()">  
+        <i class="fa fa-envelope"></i> Inbox      
+    </button>
+    <button 
+        class="btn btn-primary"
+        btn-Radio="Unread"
+        ngDefaultControl 
+        [(ngModel)]="container"
+        (click)="loadMessages()">  
+        <i class="fa fa-envelope-open"></i> Unread      
+    </button>
+    <button 
+        class="btn btn-primary"
+        btn-Radio="Outbox"
+        ngDefaultControl 
+        [(ngModel)]="container"
+        (click)="loadMessages()">  
+        <i class="fa fa-paper-plane"></i> Outbox      
+    </button>
+ </div>
+</div>
+
+<div class="row" *ngIf="messages.length > 0; else nomessages">
+    <table class="table table-hover" style="cursor: pointer;">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Message</th>
+                <th style="width: 20%;">From / To</th>
+                <th style="width: 20%;">Sent / Received</th>
+                <th style="width: 20%;">Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let message of messages">
+                <td>{{message.content}}</td>
+                <td>
+                    <div *ngIf="container == 'Outbox'">
+                        <img
+                        class="img-circle round-circle me-2" 
+                        src="{{message.recepientPhotoUrl || './assets/user.png'}}"
+                        alt="recepient photo">
+                        <strong>{{message.recepientName | titlecase}}</strong>
+                    </div>
+                    <div *ngIf="container == 'Outbox'">
+                        <img
+                        class="img-circle round-circle me-2" 
+                        src="{{message.senderPhotoUrl || './assets/user.png'}}"
+                        alt="recepient photo">
+                        <strong>{{message.senderUsername | titlecase}}</strong>
+                    </div>
+                </td>
+                <td>{{message.messageSent}}</td>
+                <td>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<template class="row" #nomessages>
+    <h3>No messages</h3>
+</template>

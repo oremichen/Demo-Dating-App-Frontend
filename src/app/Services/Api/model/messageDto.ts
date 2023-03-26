@@ -10,4 +10,5 @@ export interface MessageDto {
     senderDeleted?: boolean;
     recipientDeleted?: boolean;
     senderPhotoUrl?: string;
+    recepientPhotoUrl?: string;
 }
