@@ -5,6 +5,7 @@ import { ListsComponent } from './lists/lists.component';
 import { MemberDetailsComponent } from './member/member-details/member-details.component';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
+import { MemberMessageComponent } from './member/member-message/member-message.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guard/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guard/prevent-unsaved-changes.guard';
@@ -18,6 +19,7 @@ const routes: Routes = [
     {path: 'member', component: MemberListComponent},
     {path: 'member/:id', component: MemberDetailsComponent},
     {path: 'members/edit', component: MemberEditComponent, canDeactivate:[PreventUnsavedChangesGuard]},
+   // {path: 'member/message/:id', component: MemberMessageComponent},
     {path: 'list', component: ListsComponent},
     {path: 'messages', component: MessagesComponent},
    ]

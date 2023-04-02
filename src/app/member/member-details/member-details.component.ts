@@ -13,6 +13,7 @@ export class MemberDetailsComponent implements OnInit {
   member: Members
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
+  memberID: number;
 
   constructor(private _userservice:UsersService, private _route: ActivatedRoute) { }
 
@@ -49,8 +50,8 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   loadMember(){
-    let id = parseInt(this._route.snapshot.paramMap.get('id'))
-    this._userservice.apiUsersGetUserByIdGet(id).subscribe(res=>{
+    this.memberID = parseInt(this._route.snapshot.paramMap.get('id'))
+    this._userservice.apiUsersGetUserByIdGet(this.memberID).subscribe(res=>{
       this.member = res
       this.galleryImages= this.getImages();
     })
