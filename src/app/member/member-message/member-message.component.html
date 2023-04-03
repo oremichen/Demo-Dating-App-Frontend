@@ -9,6 +9,7 @@
                 <div>
                     <span class="chat-img float-end">
                         <img class="rounded-circle"
+                        style="float: right;"
                         src="{{message.senderPhotoUrl || './assets/users.png'}}"
                         alt="image of user">
                     </span>
@@ -32,11 +33,16 @@
     </div>
 
     <div class="card-footer">
-        <form>
+        <form (ngSubmit)="sendMessage()">
             <div class="input-group">
-                <input type="text" class="form-control input-sm" placeholder="Send a private message">
+                <input type="text" class="form-control input-sm" 
+                [(ngModel)]="content"
+                placeholder="Send a private message"
+                [ngModelOptions]="{standalone: true}"
+                >
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">Send</button>
+                    <button class="btn btn-primary"
+                    type="submit">Send</button>
                 </div>
             </div>
         </form>

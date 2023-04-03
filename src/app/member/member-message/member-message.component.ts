@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'src/app/Services/Api/api/message.service';
+import { CreateMessageDto } from 'src/app/Services/Api/model/createMessageDto';
 import { MessageDto } from 'src/app/Services/Api/model/messageDto';
 
 @Component({
@@ -15,6 +16,8 @@ export class MemberMessageComponent implements OnInit {
   @Input() recepientID: number;
   currentUserID: number;
   messages: MessageDto[]=[];
+  content: string = '';
+ 
 
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'))
@@ -26,6 +29,20 @@ export class MemberMessageComponent implements OnInit {
     this.messageService.getMessageThread(this.currentUserID, this.recepientID).subscribe({
       next: response=>{
         this.messages = response
+      }
+    })
+  }
+
+  sendMessage(){
+    var message: CreateMessageDto = {
+      recepientId: this.recepientID,
+      senderId: this.currentUserID,
+      content: this.content
+    }
+    this.messageService.addMessage(message).subscribe({
+      next:(data)=>{
+        this.content = ""
+        console.log({data})
       }
     })
   }
