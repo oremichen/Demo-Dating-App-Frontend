@@ -14,23 +14,13 @@ export class MemberMessageComponent implements OnInit {
   constructor(private messageService: MessageService, private _route: ActivatedRoute) { }
 
   @Input() recepientID: number;
+  @Input() messages: MessageDto[]=[];
   currentUserID: number;
-  messages: MessageDto[]=[];
   content: string = '';
- 
 
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'))
     this.currentUserID = user.id
-    this.loadMessages()
-  }
-
-  loadMessages(){
-    this.messageService.getMessageThread(this.currentUserID, this.recepientID).subscribe({
-      next: response=>{
-        this.messages = response
-      }
-    })
   }
 
   sendMessage(){
