@@ -9,7 +9,9 @@
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <ng-container *ngIf="authenticationService.currentUser$ | async">
             <li class="nav-item">
-              <a class="nav-link" routerLink="/member" routerLinkActive='active'>Matches</a>
+              <a class="nav-link" routerLink="/member" 
+              [routerLinkActiveOptions] = "{exact: true}"
+              routerLinkActive='active'>Matches</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/list" routerLinkActive='active'>List</a>

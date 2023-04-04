@@ -13,8 +13,8 @@ import { MessageDto } from 'src/app/Services/Api/model/messageDto';
   styleUrls: ['./member-details.component.css']
 })
 export class MemberDetailsComponent implements OnInit {
-  @ViewChild('memberTabs') memberTabs?: TabsetComponent
-  member: Members
+  @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent
+  member: Members = {} as Members
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   memberID: number;
@@ -23,12 +23,18 @@ export class MemberDetailsComponent implements OnInit {
   messages: MessageDto[]=[];
 
   constructor(private _userservice:UsersService, private _route: ActivatedRoute, 
-    private messageService: MessageService) { }
+    private _messageService: MessageService) { }
 
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'))
     this.currentUserID = user.id
-    this.loadMember()
+
+    this._route.data.subscribe({
+      next: (data)=>{
+        this.member = data['members']
+        this.memberID = this.member.id
+      }
+    })
 
     this._route.queryParams.subscribe({
       next: params=>{
@@ -47,6 +53,8 @@ export class MemberDetailsComponent implements OnInit {
         
       }
     ]
+
+    this.galleryImages= this.getImages();
   }
 
   getImages(): NgxGalleryImage[] {
@@ -63,16 +71,16 @@ export class MemberDetailsComponent implements OnInit {
     return imageurls
   }
 
-  loadMember(){
-    this.memberID = parseInt(this._route.snapshot.paramMap.get('id'))
-    this._userservice.apiUsersGetUserByIdGet(this.memberID).subscribe(res=>{
-      this.member = res
-      this.galleryImages= this.getImages();
-    })
-  }
+  // loadMember(){
+  //   this.memberID = parseInt(this._route.snapshot.paramMap.get('id'))
+  //   this._userservice.apiUsersGetUserByIdGet(this.memberID).subscribe(res=>{
+  //     this.member = res
+  //     this.galleryImages= this.getImages();
+  //   })
+  // }
 
   loadMessages(){
-    this.messageService.getMessageThread(this.currentUserID, this.memberID).subscribe({
+    this._messageService.getMessageThread(this.currentUserID, this.memberID).subscribe({
       next: response=>{
         this.messages = response
       }

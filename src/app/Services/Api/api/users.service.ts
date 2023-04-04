@@ -93,7 +93,7 @@ export class UsersService {
     apiUsersGetUserByIdGet(id: number){
         let params = new HttpParams().set('id', id.toString());
         const member = [...this.memberCache.values()]
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Users/GetUserById`, {params})
+        return this.httpClient.request<Members>('get',`${this.basePath}/api/Users/GetUserById`, {params})
      }
 
      public apiUsersGetAllUsersGet(userParams: UserParams, Id: number): Observable<any> {
