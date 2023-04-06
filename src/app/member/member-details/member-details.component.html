@@ -50,7 +50,7 @@
 
             </tab>
             <tab heading="Messages" (selectTab)="onTabActivated($event)">
-                <app-member-message [messages]="messages"></app-member-message>
+                <app-member-message [messages]="messages" [recepientID]="memberID"></app-member-message>
             </tab>
           </tabset>
     </div>

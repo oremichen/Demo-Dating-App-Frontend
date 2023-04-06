@@ -31,9 +31,10 @@ export class MemberMessageComponent implements OnInit {
     }
     this.messageService.addMessage(message).subscribe({
       next:(data)=>{
+        this.messages.push(data)
         this.content = ""
-        console.log({data})
-      }
+      },
+      error: error=> console.error(error)
     })
   }
 

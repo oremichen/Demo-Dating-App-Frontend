@@ -18,7 +18,7 @@ export class MessageService {
     return this.httpClient.get<MessageDto[]>(this.basePath + `/api/message/messageThread/${currentUserId}/${recepientId}`)
   }
 
-  public addMessage(message: MessageDto): Observable<any>{
+  public addMessage(message: MessageDto): Observable<MessageDto>{
     return this.httpClient.post<any>(this.basePath + '/api/message/add', message)
   }
 
